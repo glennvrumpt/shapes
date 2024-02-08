@@ -1,0 +1,77 @@
+[
+  {
+    "type": "Circle",
+    "name": "Green",
+    "x": 100,
+    "y": 100,
+    "xVelocity": -3,
+    "yVelocity": 2,
+    "R": 0,
+    "G": 255,
+    "B": 0,
+    "radius": 50
+  },
+  {
+    "type": "Circle",
+    "name": "Blue",
+    "x": 200,
+    "y": 200,
+    "xVelocity": 2,
+    "yVelocity": 4,
+    "R": 0,
+    "G": 0,
+    "B": 255,
+    "radius": 100
+  },
+  {
+    "type": "Circle",
+    "name": "Purple",
+    "x": 300,
+    "y": 300,
+    "xVelocity": -2,
+    "yVelocity": -1,
+    "R": 255,
+    "G": 0,
+    "B": 255,
+    "radius": 75
+  },
+  {
+    "type": "Rectangle",
+    "name": "Red",
+    "x": 200,
+    "y": 200,
+    "xVelocity": 4,
+    "yVelocity": 4,
+    "R": 255,
+    "G": 0,
+    "B": 0,
+    "width": 50,
+    "height": 25
+  },
+  {
+    "type": "Rectangle",
+    "name": "Grey",
+    "x": 300,
+    "y": 250,
+    "xVelocity": -2,
+    "yVelocity": 2,
+    "R": 100,
+    "G": 100,
+    "B": 100,
+    "width": 50,
+    "height": 100
+  },
+  {
+    "type": "Rectangle",
+    "name": "Teal",
+    "x": 25,
+    "y": 100,
+    "xVelocity": -2,
+    "yVelocity": -2,
+    "R": 0,
+    "G": 255,
+    "B": 255,
+    "width": 100,
+    "height": 100
+  }
+]
