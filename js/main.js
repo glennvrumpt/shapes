@@ -141,33 +141,45 @@ const fetchShapes = async () => {
 };
 
 const handleRectangleBoundaryCollision = (rectangle, canvas) => {
-  if (rectangle.y <= 0 || rectangle.y + rectangle.height >= canvas.height) {
-    rectangle.yVelocity *= -1;
+  if (rectangle.y <= 0) {
+    rectangle.y = 0;
+    rectangle.yVelocity = Math.abs(rectangle.yVelocity);
+  } else if (rectangle.y + rectangle.height >= canvas.height) {
+    rectangle.y = canvas.height - rectangle.height;
+    rectangle.yVelocity = -Math.abs(rectangle.yVelocity);
   }
-  if (rectangle.x <= 0 || rectangle.x + rectangle.width >= canvas.width) {
-    rectangle.xVelocity *= -1;
+
+  if (rectangle.x <= 0) {
+    rectangle.x = 0;
+    rectangle.xVelocity = Math.abs(rectangle.xVelocity);
+  } else if (rectangle.x + rectangle.width >= canvas.width) {
+    rectangle.x = canvas.width - rectangle.width;
+    rectangle.xVelocity = -Math.abs(rectangle.xVelocity);
   }
 };
 
 const handleCircleBoundaryCollision = (circle, canvas) => {
-  if (
-    circle.y - circle.radius <= 0 ||
-    circle.y + circle.radius >= canvas.height
-  ) {
-    circle.yVelocity *= -1;
+  if (circle.y - circle.radius <= 0) {
+    circle.y = circle.radius;
+    circle.yVelocity = Math.abs(circle.yVelocity);
+  } else if (circle.y + circle.radius >= canvas.height) {
+    circle.y = canvas.height - circle.radius;
+    circle.yVelocity = -Math.abs(circle.yVelocity);
   }
-  if (
-    circle.x - circle.radius <= 0 ||
-    circle.x + circle.radius >= canvas.width
-  ) {
-    circle.xVelocity *= -1;
+
+  if (circle.x - circle.radius <= 0) {
+    circle.x = circle.radius;
+    circle.xVelocity = Math.abs(circle.xVelocity);
+  } else if (circle.x + circle.radius >= canvas.width) {
+    circle.x = canvas.width - circle.radius;
+    circle.xVelocity = -Math.abs(circle.xVelocity);
   }
 };
 
-const updateShapeCoordinates = (shapes) => {
+const updateShapeCoordinates = (shapes, deltaTime) => {
   shapes.forEach((shape) => {
-    shape.x += shape.xVelocity;
-    shape.y += shape.yVelocity;
+    shape.x += shape.xVelocity * deltaTime;
+    shape.y += shape.yVelocity * deltaTime;
   });
 };
 
@@ -190,8 +202,11 @@ const render = (canvas, ctx, shapes) => {
   });
 };
 
-const mainLoop = (shapes, canvas, ctx) => {
-  updateShapeCoordinates(shapes);
+const mainLoop = (shapes, canvas, ctx, lastTime) => {
+  const currentTime = performance.now();
+  const deltaTime = (currentTime - lastTime) / 1000;
+
+  updateShapeCoordinates(shapes, deltaTime);
   render(canvas, ctx, shapes);
 
   shapes.forEach((shape) => {
@@ -202,7 +217,7 @@ const mainLoop = (shapes, canvas, ctx) => {
     }
   });
 
-  requestAnimationFrame(() => mainLoop(shapes, canvas, ctx));
+  requestAnimationFrame(() => mainLoop(shapes, canvas, ctx, currentTime));
 };
 
 initializeCanvas = () => {
@@ -216,7 +231,11 @@ initializeCanvas = () => {
   return { canvas, ctx };
 };
 
-fetchShapes().then((shapes) => {
+const startAnimation = async () => {
+  const shapes = await fetchShapes();
   const { canvas, ctx } = initializeCanvas();
-  mainLoop(shapes, canvas, ctx);
-});
+  const initialTime = performance.now();
+  mainLoop(shapes, canvas, ctx, initialTime);
+};
+
+startAnimation();
