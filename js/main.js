@@ -184,7 +184,7 @@ const updateShapeCoordinates = (shapes, deltaTime) => {
 };
 
 const render = (canvas, ctx, shapes) => {
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "#000000";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   shapes.forEach((shape) => {
